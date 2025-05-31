@@ -45,7 +45,7 @@ const GlitchText: FC<GlitchTextProps> = ({
   const combinedClasses = `${baseClasses} ${pseudoClasses} ${className}`;
 
   return (
-    <div style={inlineStyles} data-text={children} className={combinedClasses}>
+    <div style={inlineStyles} data-text={children} className={`${combinedClasses}`}>
       {children}
     </div>
   );

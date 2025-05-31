@@ -76,7 +76,7 @@ const DesktopLayout = ({
 
   return (
     <div className="max-w-screen p-0">
-      <div className="w-screen h-screen absolute inset-0 z-[-10]">
+      <div className="w-screen h-screen overflow-hidden absolute inset-0 z-[-10]">
         <Aurora
           colorStops={["#8000FF", "#4361F9", "#516583"]}
           blend={0.5}
@@ -86,23 +86,26 @@ const DesktopLayout = ({
       </div>
 
       <div className="flex z-0 justify-center p-6 gap-2 items-center w-screen h-screen">
-        <div className="w-3/5">
+        <div className="w-3/5 not-md:w-2/5 px-auto overflow-hidden">
           {/* <ASCIIText
             text="STILNEXT"
             enableWaves={true}
             asciiFontSize={8}
           /> */}
-          <GlitchText
-            speed={1}
-            enableShadows={true}
-            enableOnHover={false}
-            className="custom-class bg-transparent"
-          >
-            STIL NEXT
-          </GlitchText>
+          <div className="relative w-full -translate-x-3/7 top-1/2 left-1/2">
+            <GlitchText
+              speed={1}
+              enableShadows={true}
+              enableOnHover={false}
+              className="custom-class"
+            >
+              STIL NEXT
+            </GlitchText>
+          </div>
         </div>
-        <div className="w-2/5 h-full bg-black/40 rounded-2xl shadow-lg">
-          <h2 className="text-4xl font-bold font-lilita text-center my-10">
+
+        <div className="w-2/5 not-md:w-3/5 h-full bg-black/40 rounded-2xl shadow-lg">
+          <h2 className="text-4xl font-bold font-lilita text-center my-10 px-2">
             Log in to Continue
           </h2>
 
@@ -169,7 +172,7 @@ const DesktopLayout = ({
             </div>
           </div>
 
-          <p className="mt-6 text-sm text-center text-gray-600">
+          <p className="text-sm text-center text-gray-600">
             <button className="text-gray-200 hover:text-white font-medium cursor-pointer">
               Forgot Password?
             </button>
