@@ -7,6 +7,8 @@ import { loginStart, loginSuccess, loginFailure } from "../store/authSlice";
 
 import Aurora from "@/components/aurora";
 import { GoogleLogin } from "@react-oauth/google";
+import ASCIIText from "@/components/ASCIIText";
+import GlitchText from "@/components/GlitchText";
 
 interface User {
   id: number;
@@ -84,11 +86,23 @@ const DesktopLayout = ({
       </div>
 
       <div className="flex z-0 justify-center p-6 gap-2 items-center w-screen h-screen">
-        <div className="w-3/5 text-4xl">
-          STIL<span className="font-pacifico">NEXT</span>
+        <div className="w-3/5">
+          {/* <ASCIIText
+            text="STILNEXT"
+            enableWaves={true}
+            asciiFontSize={8}
+          /> */}
+          <GlitchText
+            speed={1}
+            enableShadows={true}
+            enableOnHover={false}
+            className="custom-class bg-transparent"
+          >
+            STIL NEXT
+          </GlitchText>
         </div>
         <div className="w-2/5 h-full bg-black/40 rounded-2xl shadow-lg">
-          <h2 className="text-4xl font-bold font-lilita text-center my-6">
+          <h2 className="text-4xl font-bold font-lilita text-center my-10">
             Log in to Continue
           </h2>
 
@@ -102,7 +116,7 @@ const DesktopLayout = ({
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-4/5 mx-auto block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
 
             <input
@@ -110,15 +124,24 @@ const DesktopLayout = ({
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-4/5 mx-auto block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
 
             <button
               onClick={handleLogin}
               disabled={loading}
-              className="w-1/2 mx-auto block px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition disabled:opacity-50"
+              className="w-1/2 mx-auto block px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition disabled:opacity-50 relative"
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? (
+                <>
+                  <span className="opacity-0">Login</span>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                </>
+              ) : (
+                "Login"
+              )}
             </button>
 
             <div className="flex items-center gap-2 py-2">

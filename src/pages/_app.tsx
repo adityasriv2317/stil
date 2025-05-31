@@ -4,6 +4,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import "@/app/globals.css";
 import "@/styles/fonts.css";
+import '@/styles/glitchAnimation.css'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
