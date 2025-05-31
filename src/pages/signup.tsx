@@ -10,38 +10,52 @@ import { GoogleLogin } from "@react-oauth/google";
 import ASCIIText from "@/components/ASCIIText";
 import GlitchText from "@/components/GlitchText";
 import Loader from "@/components/Loader";
+import Dropdown from "@/components/Dropdown";
+import DatePicker from "@/components/DatePicker";
 
 interface User {
   id: number;
   email: string;
+  name: string;
+  dob: string;
+  gender: string;
 }
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [dob, setDob] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     dispatch(loginStart());
     try {
       // Simulate API request
       await new Promise((res) => setTimeout(res, 1000));
-      const user: User = { id: 1, email }; // Mock user data
+      const user: User = { id: 1, email, name, dob, gender };
       dispatch(loginSuccess(user));
     } catch (err) {
-      dispatch(loginFailure("Invalid credentials"));
+      dispatch(loginFailure("Signup failed"));
     }
   };
 
   const props = {
     email,
     password,
+    name,
+    dob,
+    gender,
     setEmail,
     setPassword,
-    handleLogin,
+    setName,
+    setDob,
+    setGender,
+    handleSignup,
     loading,
     error,
     isAuthenticated,
@@ -56,9 +70,15 @@ const DesktopLayout = ({
   props: {
     email: string;
     password: string;
+    name: string;
+    dob: string;
+    gender: string;
     setEmail: (email: string) => void;
     setPassword: (password: string) => void;
-    handleLogin: () => Promise<void>;
+    setName: (name: string) => void;
+    setDob: (dob: string) => void;
+    setGender: (gender: string) => void;
+    handleSignup: () => Promise<void>;
     loading: boolean;
     error: string | null;
     isAuthenticated: boolean;
@@ -67,9 +87,15 @@ const DesktopLayout = ({
   const {
     email,
     password,
+    name,
+    dob,
+    gender,
     setEmail,
     setPassword,
-    handleLogin,
+    setName,
+    setDob,
+    setGender,
+    handleSignup,
     loading,
     error,
     isAuthenticated,
@@ -107,17 +133,49 @@ const DesktopLayout = ({
 
         <div className="w-2/5 not-md:w-3/5 h-full bg-black/40 rounded-2xl shadow-lg">
           <h2 className="text-4xl font-bold font-lilita text-center my-10 px-2">
-            Log in to Continue
+            Sign Up to Continue
           </h2>
 
           {error && (
             <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
           )}
 
-          <div className="space-y-4 px-16 flex flex-col justify-center h-[calc(100%-12rem)]">
+            <div className="space-y-4 font-oxanium px-16 flex flex-col justify-center h-[calc(100%-12rem)]">
+            <input
+              type="text"
+              placeholder="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-4/5 oxanium-new mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+            />
+
+            <div className="w-4/5 mx-auto grid grid-cols-2 gap-3">
+              <Dropdown buttonContent={gender} placeholder="gender">
+                {["Male", "Female"].map((g) => (
+                  <div
+                    key={g}
+                    onClick={() => setGender(g)}
+                    className="px-4 py-2 cursor-pointer hover:bg-purple-600 text-white rounded-xl transition"
+                  >
+                    {g}
+                  </div>
+                ))}
+              </Dropdown>
+
+              <DatePicker onChange={setDob} value={dob} placeholder="dob" />
+
+
+              {/* <input
+                type="date"
+                placeholder="Date of Birth"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                className=" text-center placeholder:text-white block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              /> */}
+            </div>
             <input
               type="email"
-              placeholder="Email"
+              placeholder="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
@@ -125,22 +183,18 @@ const DesktopLayout = ({
 
             <input
               type="password"
-              placeholder="Password"
+              placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
 
             <button
-              onClick={handleLogin}
+              onClick={handleSignup}
               disabled={loading}
               className="w-1/2 mx-auto block px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition disabled:opacity-50 relative"
             >
-              {loading ? (
-                <Loader />
-              ) : (
-                "Login"
-              )}
+              {loading ? <Loader /> : "sign up"}
             </button>
 
             <div className="flex items-center gap-2 py-2">
@@ -155,7 +209,7 @@ const DesktopLayout = ({
                   console.log(credentialResponse);
                 }}
                 onError={() => {
-                  console.log("Login Failed");
+                  console.log("Signup Failed");
                 }}
                 useOneTap
                 shape="pill"
@@ -168,15 +222,10 @@ const DesktopLayout = ({
             </div>
           </div>
 
-          <p className="text-sm text-center text-gray-600">
-            <button className="text-gray-200 hover:text-white font-medium cursor-pointer">
-              Forgot Password?
-            </button>
-          </p>
           <p className="mt-2 text-sm text-center text-gray-300/90">
-            Don’t have an account?{" "}
+            Already have an account?{" "}
             <button className="text-gray-200 hover:text-white font-medium cursor-pointer">
-              Sign Up
+              Log In
             </button>
           </p>
         </div>
@@ -184,32 +233,3 @@ const DesktopLayout = ({
     </div>
   );
 };
-
-{
-  /* <h1 className="text-xl font-bold mb-4">Login</h1>
-{error && <p className="text-red-500 mb-2">{error}</p>}
-<input
-  type="email"
-  placeholder="Email"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  className="block w-full mb-2 p-2 border rounded"
-/>
-<input
-  type="password"
-  placeholder="Password"
-  value={password}
-  onChange={(e) => setPassword(e.target.value)}
-  className="block w-full mb-2 p-2 border rounded"
-/>
-<button
-  onClick={handleLogin}
-  disabled={loading}
-  className="w-full bg-blue-600 text-white px-4 py-2 rounded"
->
-  {loading ? "Logging in..." : "Login"}
-</button>
-{isAuthenticated && (
-  <p className="mt-4 text-green-600">You are logged in!</p>
-)} */
-}
