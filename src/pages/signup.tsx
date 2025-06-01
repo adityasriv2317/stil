@@ -25,6 +25,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
   const [dob, setDob] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
@@ -48,10 +49,12 @@ export default function SignupPage() {
     email,
     password,
     name,
+    showPassword,
     dob,
     gender,
     setEmail,
     setPassword,
+    setShowPassword,
     setName,
     setDob,
     setGender,
@@ -70,11 +73,13 @@ const DesktopLayout = ({
   props: {
     email: string;
     password: string;
+    showPassword: boolean;
     name: string;
     dob: string;
     gender: string;
     setEmail: (email: string) => void;
     setPassword: (password: string) => void;
+    setShowPassword: React.Dispatch<React.SetStateAction<boolean>>;
     setName: (name: string) => void;
     setDob: (dob: string) => void;
     setGender: (gender: string) => void;
@@ -87,11 +92,13 @@ const DesktopLayout = ({
   const {
     email,
     password,
+    showPassword,
     name,
     dob,
     gender,
     setEmail,
     setPassword,
+    setShowPassword,
     setName,
     setDob,
     setGender,
@@ -140,7 +147,7 @@ const DesktopLayout = ({
             <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
           )}
 
-            <div className="space-y-4 font-oxanium px-16 flex flex-col justify-center h-[calc(100%-12rem)]">
+          <div className="space-y-4 font-oxanium px-16 flex flex-col justify-center h-[calc(100%-12rem)]">
             <input
               type="text"
               placeholder="name"
@@ -150,8 +157,8 @@ const DesktopLayout = ({
             />
 
             <div className="w-4/5 mx-auto grid grid-cols-2 gap-3">
-              <Dropdown buttonContent={gender} placeholder="gender">
-                {["Male", "Female"].map((g) => (
+              <Dropdown buttonContent={gender || "gender"} placeholder="gender">
+                {['Male', 'Female'].map((g) => (
                   <div
                     key={g}
                     onClick={() => setGender(g)}
@@ -163,16 +170,8 @@ const DesktopLayout = ({
               </Dropdown>
 
               <DatePicker onChange={setDob} value={dob} placeholder="dob" />
-
-
-              {/* <input
-                type="date"
-                placeholder="Date of Birth"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-                className=" text-center placeholder:text-white block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-              /> */}
             </div>
+
             <input
               type="email"
               placeholder="email"
@@ -181,13 +180,48 @@ const DesktopLayout = ({
               className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
 
-            <input
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-            />
+            <div className="relative w-4/5 mx-auto">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute w-fit right-5 top-1/2 -translate-y-1/2 text-gray-100 hover:text-purple-600 focus:outline-none"
+                tabIndex={-1}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  // Eye-off icon
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.94 17.94A10.05 10.05 0 0112 19c-5 0-9-4-9-7 0-1.657 1.343-3.21 3.125-4.525M6.06 6.06A10.05 10.05 0 0112 5c5 0 9 4 9 7 0 1.657-1.343 3.21-3.125 4.525M3 3l18 18"
+                    />
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="3"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      fill="none"
+                    />
+                    </svg>
+                ) : (
+                  // Eye icon
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                )}
+              </button>
+            </div>
 
             <button
               onClick={handleSignup}
@@ -225,11 +259,11 @@ const DesktopLayout = ({
           <p className="mt-2 text-sm text-center text-gray-300/90">
             Already have an account?{" "}
             <button 
-            onClick={() => {
-                // navigate to sign-up page
+              onClick={() => {
+                // navigate to login page
                 window.location.href = "/login";
               }}
-            className="text-gray-200 hover:text-white font-medium cursor-pointer">
+              className="text-gray-200 hover:text-white font-medium cursor-pointer">
               Log In
             </button>
           </p>
