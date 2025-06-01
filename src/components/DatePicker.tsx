@@ -99,8 +99,8 @@ export default function CustomDatePicker({
       </button>
 
       {open && (
-        <div className="absolute z-10 mt-2 min-w-fit bg-black border border-gray-700 rounded-xl shadow-lg p-4">
-          <div className="flex min-w-fit justify-between items-center text-white mb-2">
+        <div className="absolute z-10 mt-2 w-72 bg-black border border-gray-700 rounded-xl shadow-lg p-4">
+          <div className="flex justify-between items-center text-white mb-2">
             <button
               onClick={() =>
                 viewMode === "calendar"
@@ -113,7 +113,7 @@ export default function CustomDatePicker({
               ←
             </button>
 
-            <div className="flex gap-2 min-w-fit">
+            <div className="flex gap-2">
               {viewMode !== "year" && (
                 <span
                   onClick={() => setViewMode("month")}
@@ -145,7 +145,7 @@ export default function CustomDatePicker({
 
           {/* Calendar View */}
           {viewMode === "calendar" && (
-            <div className="grid grid-cols-7 gap-1 min-w-fit text-sm text-center text-white">
+            <div className="grid grid-cols-7 gap-1 text-sm text-center text-white w-full">
               {["S", "M", "T", "W", "Th", "F", "Sa"].map((d) => (
                 <div key={d} className="font-bold p-2">
                   {d}
@@ -161,7 +161,7 @@ export default function CustomDatePicker({
                   <div
                     key={idx}
                     onClick={() => handleDateSelect(day)}
-                    className={`p-2 my-1 min-w-fit rounded-lg ease-in text-center cursor-pointer transition ${
+                    className={`p-2 my-1 rounded-lg cursor-pointer transition text-center ease-in ${
                       day
                         ? isSelected
                           ? "bg-purple-600 text-white"
@@ -178,7 +178,7 @@ export default function CustomDatePicker({
 
           {/* Month Picker */}
           {viewMode === "month" && (
-            <div className="grid grid-cols-3 gap-2 text-white text-sm">
+            <div className="grid grid-cols-3 gap-2 text-white text-sm w-full">
               {monthNames.map((month, idx) => (
                 <div
                   key={month}
@@ -193,7 +193,7 @@ export default function CustomDatePicker({
 
           {/* Year Picker */}
           {viewMode === "year" && (
-            <div className="grid grid-cols-3 gap-2 text-white text-sm max-h-64 overflow-hidden">
+            <div className="grid grid-cols-3 gap-2 text-white text-sm max-h-64 overflow-hidden w-full">
               {years.map((year) => (
                 <div
                   key={year}
