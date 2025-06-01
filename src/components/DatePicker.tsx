@@ -68,7 +68,7 @@ export default function CustomDatePicker({
   };
 
   const currentYear = viewDate.year();
-  const years = Array.from({ length: 25 }, (_, i) => currentYear - 100 + i);
+  const years = Array.from({ length: 18 }, (_, i) => currentYear + i);
 
   const monthNames = [
     "Jan",
@@ -89,7 +89,7 @@ export default function CustomDatePicker({
     <div className={`relative ${className}`} ref={pickerRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="min-w-full text-center px-4 py-3 border border-gray-300 rounded-xl bg-black/90 text-white focus:outline-none"
+        className="min-w-full text-center px-4 py-3 border border-gray-300 rounded-xl bg-black/10 text-white focus:outline-none"
       >
         {selectedDate ? (
           selectedDate.format("YYYY-MM-DD")
@@ -99,7 +99,7 @@ export default function CustomDatePicker({
       </button>
 
       {open && (
-        <div className="absolute z-10 mt-2 w-72 bg-black border border-gray-700 rounded-xl shadow-lg p-4">
+        <div className="absolute z-10 mt-2 w-72 -translate-x-1/5 bg-black border border-gray-700 rounded-xl shadow-lg p-4">
           <div className="flex justify-between items-center text-white mb-2">
             <button
               onClick={() =>
@@ -107,8 +107,9 @@ export default function CustomDatePicker({
                   ? setViewDate(viewDate.subtract(1, "month"))
                   : viewMode === "month"
                   ? setViewDate(viewDate.subtract(1, "year"))
-                  : setViewDate(viewDate.subtract(25, "year"))
+                  : setViewDate(viewDate.subtract(18, "year"))
               }
+              className="text-white hover:bg-purple-500 px-1.5 rounded-md transition"
             >
               ←
             </button>
@@ -136,8 +137,9 @@ export default function CustomDatePicker({
                   ? setViewDate(viewDate.add(1, "month"))
                   : viewMode === "month"
                   ? setViewDate(viewDate.add(1, "year"))
-                  : setViewDate(viewDate.add(25, "year"))
+                  : setViewDate(viewDate.add(18, "year"))
               }
+            className="text-white hover:bg-purple-500 px-1.5 rounded-md transition"
             >
               →
             </button>
@@ -193,15 +195,15 @@ export default function CustomDatePicker({
 
           {/* Year Picker */}
           {viewMode === "year" && (
-            <div className="grid grid-cols-3 gap-2 text-white text-sm max-h-64 overflow-hidden w-full">
+            <div className="grid grid-cols-3 gap-2 text-white text-sm overflow-hidden w-full">
               {years.map((year) => (
-                <div
-                  key={year}
-                  onClick={() => handleYearSelect(year)}
-                  className="p-2 rounded-lg cursor-pointer text-center hover:bg-purple-800 transition"
-                >
-                  {year}
-                </div>
+              <div
+                key={year}
+                onClick={() => handleYearSelect(year)}
+                className="p-2 rounded-lg cursor-pointer text-center hover:bg-purple-800 transition"
+              >
+                {year}
+              </div>
               ))}
             </div>
           )}

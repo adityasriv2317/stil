@@ -114,10 +114,10 @@ const DesktopLayout = ({
             <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
           )}
 
-          <div className="space-y-4 px-16 flex flex-col justify-center h-[calc(100%-12rem)]">
+          <div className="space-y-4 font-oxanium px-16 flex flex-col justify-center h-[calc(100%-12rem)]">
             <input
               type="email"
-              placeholder="Email"
+              placeholder="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
@@ -125,7 +125,7 @@ const DesktopLayout = ({
 
             <input
               type="password"
-              placeholder="Password"
+              placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-4/5 mx-auto text-center block px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
@@ -136,11 +136,7 @@ const DesktopLayout = ({
               disabled={loading}
               className="w-1/2 mx-auto block px-8 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl transition disabled:opacity-50 relative"
             >
-              {loading ? (
-                <Loader />
-              ) : (
-                "Login"
-              )}
+              {loading ? <Loader /> : "login"}
             </button>
 
             <div className="flex items-center gap-2 py-2">
@@ -175,7 +171,13 @@ const DesktopLayout = ({
           </p>
           <p className="mt-2 text-sm text-center text-gray-300/90">
             Don’t have an account?{" "}
-            <button className="text-gray-200 hover:text-white font-medium cursor-pointer">
+            <button
+              className="text-gray-200 hover:text-white font-medium cursor-pointer"
+              onClick={() => {
+                // navigate to sign-up page
+                window.location.href = "/signup";
+              }}
+            >
               Sign Up
             </button>
           </p>

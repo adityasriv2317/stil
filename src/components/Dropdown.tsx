@@ -39,7 +39,7 @@ export default function Dropdown({
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-full text-center px-4 py-3 border border-gray-300 rounded-xl bg-black/90 text-white focus:outline-none"
+        className="w-full text-center px-4 py-3 border border-gray-300 rounded-xl bg-black/10 text-white focus:outline-none"
       >
         {displayLabel}
       </button>

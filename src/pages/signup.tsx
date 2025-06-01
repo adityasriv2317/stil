@@ -133,7 +133,7 @@ const DesktopLayout = ({
 
         <div className="w-2/5 not-md:w-3/5 h-full bg-black/40 rounded-2xl shadow-lg">
           <h2 className="text-4xl font-bold font-lilita text-center my-10 px-2">
-            Sign Up to Continue
+            Create new Account
           </h2>
 
           {error && (
@@ -224,7 +224,12 @@ const DesktopLayout = ({
 
           <p className="mt-2 text-sm text-center text-gray-300/90">
             Already have an account?{" "}
-            <button className="text-gray-200 hover:text-white font-medium cursor-pointer">
+            <button 
+            onClick={() => {
+                // navigate to sign-up page
+                window.location.href = "/login";
+              }}
+            className="text-gray-200 hover:text-white font-medium cursor-pointer">
               Log In
             </button>
           </p>
