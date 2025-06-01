@@ -17,6 +17,5 @@ export default function Page() {
     }
   }, [isAuthenticated, router]);
 
-  // Return null or loading state while redirecting
   return null;
 }
